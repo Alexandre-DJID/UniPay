@@ -368,40 +368,49 @@ class _CaissiereDashboardState extends State<CaissiereDashboard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          reglement.type.label,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textDark,
-                            fontSize: 14,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            reglement.type.label,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textDark,
+                              fontSize: 14,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${reglement.dateReglement.day}/${reglement.dateReglement.month}/${reglement.dateReglement.year} à '
-                          '${reglement.dateReglement.hour.toString().padLeft(2, '0')}:'
-                          '${reglement.dateReglement.minute.toString().padLeft(2, '0')}',
-                          style: const TextStyle(
-                            color: AppColors.textSecondary,
-                            fontSize: 12,
+                          const SizedBox(height: 4),
+                          Text(
+                            '${reglement.dateReglement.day}/${reglement.dateReglement.month}/${reglement.dateReglement.year} à '
+                            '${reglement.dateReglement.hour.toString().padLeft(2, '0')}:'
+                            '${reglement.dateReglement.minute.toString().padLeft(2, '0')}',
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 12,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        if (reglement.referenceTransaction != null)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Text(
-                              'Ref: ${reglement.referenceTransaction}',
-                              style: const TextStyle(
-                                color: AppColors.textLight,
-                                fontSize: 11,
+                          if (reglement.referenceTransaction != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Text(
+                                'Ref: ${reglement.referenceTransaction}',
+                                style: const TextStyle(
+                                  color: AppColors.textLight,
+                                  fontSize: 11,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
+                    const SizedBox(width: 12),
                     Text(
                       CurrencyFormatter.formatFCFA(reglement.montant),
                       style: const TextStyle(
@@ -409,6 +418,8 @@ class _CaissiereDashboardState extends State<CaissiereDashboard> {
                         color: AppColors.successColor,
                         fontSize: 14,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
