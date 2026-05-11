@@ -1,0 +1,29 @@
+# Logs
+logs/
+*.log
+
+# Configuration locale
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# PHP
+vendor/
+composer.lock
+
+# Tests
+coverage/
+.phpunit.result.cache
+
+# Fichiers temporaires
+tmp/
+temp/
+*.tmp

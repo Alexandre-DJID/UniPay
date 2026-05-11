@@ -1,0 +1,68 @@
+# Configuration Apache pour l'API UniPay
+
+# Activer le module mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /backend/api/
+    
+    # Rediriger toutes les requêtes vers index.php (si nécessaire)
+    # RewriteCond %{REQUEST_FILENAME} !-f
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteRule ^ index.php [L]
+</IfModule>
+
+# Désactiver le listing des dossiers
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# Configurer les en-têtes
+<IfModule mod_headers.c>
+    # Forcer HTTPS en production
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+    # Sécurité supplémentaire
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Compression
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+</IfModule>
+
+# Compression GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/javascript application/javascript application/json
+</IfModule>
+
+# Configurer PHP
+<IfModule mod_php.c>
+    php_flag display_errors On
+    php_flag log_errors On
+    php_value error_log "/var/log/php_errors.log"
+    
+    # Limiter la taille des uploads
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    
+    # Timeout
+    php_value max_execution_time 30
+</IfModule>
+
+# Protection contre l'accès direct à certains fichiers
+<FilesMatch "\.php$">
+    Require all granted
+</FilesMatch>
+
+<FilesMatch "^(db|cors|config)\.php$">
+    <IfModule mod_php.c>
+        php_flag allow_url_include off
+        php_flag allow_url_fopen off
+    </IfModule>
+</FilesMatch>
+
+# Interdire l'accès aux dossiers sensibles
+<DirectoryMatch "^.*(logs|\.git|\.env)">
+    Order Deny,Allow
+    Deny from all
+</DirectoryMatch>
